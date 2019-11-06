@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces: VM.*
+      preferred-networks: 176.117.81.214
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+      name: user-service
+      profile: dev
