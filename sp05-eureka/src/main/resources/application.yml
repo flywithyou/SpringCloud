@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  server:
+    enable-self-preservation: false
+
+---
+spring:
+  profiles: eureka1
+
+server:
+  port: 2001
+
+# eureka1 向 eureka2 注册
+eureka:
+  instance:
+    hostname: eureka1
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.inetutils.preferred-networks}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://eureka2:2002/eureka
+
+---
+spring:
+  profiles: eureka2
+
+server:
+  port: 2002
+
+# eureka2 向 eureka1 注册
+eureka:
+  instance:
+    hostname: eureka2
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.inetutils.preferred-networks}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka
+
